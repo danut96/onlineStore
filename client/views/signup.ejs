@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <form action='/signup' method="POST">
+            <b>*First Name:</b><br>
+		    <input type="text" name="firstName" placeholder="First Name" required><br>
+            <b>*Last Name:</b><br>
+		    <input type="text" name="lastName" placeholder="Last Name" required><br>
+            <b>*Email:</b><br>
+		    <input type="text" name="email" placeholder="email" required><br>
+	        <b>*Password:</b><br>
+            <input type="password" name="password" placeholder="Password" required><br>
+            <b>Phone:</b><br>
+		    <input type="text" name="phone" placeholder="Phone number"><br>
+            <b>Address:</b><br>
+		    <input type="text" name="address" placeholder="Address"><br>
+		    <p id="error" style="color: red;"><%= message %></p>
+	        <input class="but" type="submit" value="Signup"><br>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <form action='/login' method="POST">
+            <b>Email:</b><br>
+		    <input type="text" name="email" placeholder="email" required><br>
+	        <b>Password:</b><br>
+		    <input type="password" name="password" placeholder="password" required><br>
+		    <p id="error" style="color: red;"><%= message %></p>
+	        <input class="but" type="submit" value="Login"><br>
+        </form>
+    </body>
+</html>
