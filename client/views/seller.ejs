@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="seller.js"></script>
+        <link rel = "stylesheet" type = "text/css" href = "header&footer.css">
+        <link rel = "stylesheet" type = "text/css" href = "body.css">
+        <link rel = "stylesheet" type = "text/css" href = "seller.css">
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+    </head>
+    <body>
+        <%- include partials/header.ejs %>
+        <div class="content-container">
+            <h2>Hello, <%=user.firstName%></h2> 
+            <h4>Add, edit or delete a product of yours.</h4>
+            <h4 style="color: blue">! If you want to update the stock of a product, select ' EDIT ', and from the product page select 'STOCK'<br></h4>
+            <div class="manage" >
+                <div class="add" onclick="hide(0); "><i class='fas fa-plus'></i></div>
+                <div class="edit" onclick="location.href='/search?seller=<%=user.firstName%>'"><i class='fas fa-edit'></i></div>
+                <div class="delete" onclick="location.href='/search?seller=<%=user.firstName%>'"><i class='fas fa-minus'></i></div>
+            </div>
+            <div class="requests"><h2>Your requests:</h2>
+                <table>
+                    <tr>
+                        <th>Stage</th>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Product name</th>
+                    </tr>
+                    <%for(let i = 0; i < requests.length; i++){%>
+                        <tr>
+                            <%if(requests[i].stage === "accepted"){%>
+                                <td style="background-color: lightgreen">accepted</td>
+                            <%}%>
+                            <%if(requests[i].stage === "pending"){%>
+                                <td style="background-color: orange">pending</td>
+                            <%}%>
+                            <%if(requests[i].stage === "denied"){%>
+                                <td style="background-color: tomato">denied</td>
+                            <%}%>
+                            <td><%=requests[i].createdAt.getDate()%>.<%=requests[i].createdAt.getMonth() + 1%>.<%=requests[i].createdAt.getFullYear()%></td>
+                            <td><%=requests[i].type%></td>
+                            <td><%=JSON.parse(requests[i].description).title%></td>
+                        </tr>
+                    <%}%> 
+                </table>
+            </div>
+            <div class="manageproduct">
+                <h4><span style="color: green">By clicking on "ADD PRODUCT", a request will be sent to the owner of the store. You will be noticed if the request was denied.</span></h4>
+                <a href="/manage-products">Go back</a>
+                <div class="addproduct">
+                    <form id="addprod" method="POST" action="/add-product" enctype="multipart/form-data">
+                        <div class="select_category">
+                            Category: <select></select>
+                            , Subcategory: <select name="subcategory"></select>
+                        </div>
+                        <img id="img" src="#" alt="Product image">
+                        <input type="file" class="image" name="image" onchange="preview()" />
+                        <div class="product_info">
+                            <table>
+                                <tr>
+                                    <td>Name:</td>
+                                    <td><input type='text' class="title" name="title" placeholder="Product name" required></td>
+                                </tr>
+                                <tr>
+                                    <td>Description:</td>
+                                    <td><textarea name="description" form="addprod" placeholder="Product description..." required></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td>Price($):</td>
+                                    <td><input type='text' class="price" name="price" placeholder="Product price" required></td>
+                                </tr>
+                                <tr>
+                                    <td>Discount(%):</td>
+                                    <td><input type="text" class="discount" name="discount" placeholder="Discount" ></td>
+                                </tr>
+                                <tr>
+                                    <td>Stock(units):</td>
+                                    <td><input type="text" class="stock" name="stock" placeholder="Stock" ></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <button type="submit">Add product</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <%- include partials/footer.ejs %>
+    </body>
+</html>

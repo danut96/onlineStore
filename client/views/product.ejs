@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+        <link rel = "stylesheet" type = "text/css" href = "header&footer.css">
+        <link rel = "stylesheet" type = "text/css" href = "body.css">
+        <link rel = "stylesheet" type = "text/css" href = "product.css">
+        <script src="product.js"></script>
+    </head>
+    <body>
+        <%- include partials/header.ejs %>
+        <div class="content-container">
+            <%if(seller || isAdmin){%>
+                <h3 style="color: red; text-align: center"> To edid your product, just click on the element you want to edit (title, description, etc - inside dotted boxes), edit, and click on "apply changes" here: <button style="display: inline;" onclick="edit()">Apply changes</button><br> <a href="/delete?id=<%=prod.id%>">Delete product</a> </h3>
+            <%}%>
+            <div class="basic-info">
+                <div class="image">
+                    <img src="http://localhost:3000/images/<%=prod.image%>">
+                </div>
+                <div class="title-rating">
+                    <div class="title"><span contenteditable="<%=seller || isAdmin%>" style="display: table-cell; vertical-align: middle; padding-left: 50px"><%=prod.name%></span></div>
+                    <div class="rating-price">
+                        <div class="rating">
+                            <div class="stock">
+                                <%if(prod.stock > 14){%> 
+                                    <span style="color:green"> <span class="dotg"></span> In stock.</span>
+                                    <%}else{ if(prod.stock > 0){%>
+                                    <span style="color:orange"> <span class="doto"></span> Last items in stock!</span>
+                                    <%}else{%>
+                                    <span style="color:red"> <span class="dotr"></span> Out of stock.</span>
+                                    <%}}%>
+                                    <%if(seller || isAdmin){%>
+                                        Products in stock: <span contenteditable="true" style="background-color: yellow"><%=prod.stock%></span> products.
+                                    <%}%>
+                            </div>
+                            <div class="seller">
+                                Seller: <a href="/search?seller=<%=prod.user.firstName%>" style="text-decoration: none; color: blue"><%=prod.user.firstName%></a> 
+                            </div>
+                            <div class="stars"> 
+                                <% for(let j = 0; j < Math.round(prod.rating); j++) { %>
+                                    <span class="fa fa-star checked"></span>
+                                    <%}%>
+                                <% for(let j = Math.round(prod.rating); j < 5 ; j++) { %>
+                                    <span class="fa fa-star"></span>
+                                    <%}%>
+                                <%= prod.rating.toFixed(1) %>
+
+                            </div>
+                            <div class="nrreviews"> <%=reviews.length%> reviews </div>
+                        </div>
+                        <div class="price-cart">
+                            <div class="price"style="line-height: normal">
+                                <% if(prod.discount > 0) {%> 
+                                    <div class="oldprice">
+                                        <div style="color: red; display: table-cell; vertical-align: middle" >
+                                            <del contenteditable="<%=seller || isAdmin%>">$ <%= prod.price%></del> <br>
+                                            - Save <%=prod.discount * prod.price / 100%>$ -
+                                        </div>
+                                    </div>
+                                    <div class="newprice">
+                                        <span contenteditable="<%=seller || isAdmin%>" style="color: blue; display: table-cell; vertical-align: middle"><%= "$" + (prod.price - prod.discount * prod.price / 100) %></span>
+                                    </div>
+                                <%} else { %>
+                                    <div class="discount" style="height: 25%; font-size: 18px; text-align: center">
+                                        <%if(seller || isAdmin){%>
+                                            Discount: <span contenteditable="<%=seller || isAdmin%>">0%</span>    
+                                        <%}%>
+                                    </div>
+                                    <div class="newprice">
+                                        <span contenteditable="<%=seller || isAdmin%>" style="color: blue; display: table-cell; vertical-align: middle"><%=  "$" + prod.price%></span>
+                                    </div>
+                                <%}%>
+                            </div>
+                            <% if(prod.stock > 0){%>
+                            <div class="addtocart">
+                                <div class="add-basket">
+                                    <a href="/basket/add?id=<%=prod.id%>">
+                                        <button style="display: table-cell; vertical-align: middle">Add to cart  <i class="fa fa-cart-plus"></i></button>
+                                    </a>
+                                </div>
+                            </div>
+                            <%}%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="description-reviews">
+                <div class="description">
+                    <div class="subtitle">Description</div>
+                    <span contenteditable="<%=seller || isAdmin%>"><%=prod.description%></span>
+                </div>
+                <div class="reviews">
+                    <div class="subtitle">Reviews</div>
+                    <% for(let i = 0; i < reviews.length; i++){%>
+                    <div class="review">
+                        <div class="username"><%=reviews[i].user.firstName%> <%=reviews[i].user.lastName%>
+                            <%if(reviews[i].owner === true){%>
+                            <br><span style="color:green">Owns it <i class='far fa-check-circle'></i></span>
+                        <%}%>
+                        </div>
+                        <div class="date-rating-content">
+                            <div class="date-rating">
+                                <% var date = reviews[i].createdAt%>
+                                <div class="date"> <%=date.getDate()%>-<%=date.getUTCMonth() + 1%>-<%=date.getUTCFullYear()%></div>
+                                <div class="rating">
+                                        <% for(let j = 0; j < Math.round(reviews[i].rating); j++) { %>
+                                            <span class="fa fa-star checked"></span>
+                                            <%}%>
+                                        <% for(let j = Math.round(reviews[i].rating); j < 5 ; j++) { %>
+                                            <span class="fa fa-star"></span>
+                                            <%}%>
+                                        <%= reviews[i].rating %>
+                                        <%if(isAdmin){%>
+                                            <br><a href="/delete-review?id=<%=reviews[i].id%>">Delete review</a>
+                                        <%}%>
+                                </div>
+                            </div>
+                            <div class="content"><%=reviews[i].content%></div>
+                        </div>
+                    </div>
+                    <%}%>
+                    <div class="add-review">
+                        <form action='/addreview' method='GET'>
+                            <div class="star-rating" style="display: inline;">
+                                <div class="star-rating__wrap">
+                                    <input class="star-rating__input" id="star-rating-5" type="radio" name="rating" value="5">
+                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-5" title="5 out of 5 stars"></label>
+                                    <input class="star-rating__input" id="star-rating-4" type="radio" name="rating" value="4">
+                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-4" title="4 out of 5 stars"></label>
+                                    <input class="star-rating__input" id="star-rating-3" type="radio" name="rating" value="3">
+                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-3" title="3 out of 5 stars"></label>
+                                    <input class="star-rating__input" id="star-rating-2" type="radio" name="rating" value="2">
+                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-2" title="2 out of 5 stars"></label>
+                                    <input class="star-rating__input" id="star-rating-1" type="radio" name="rating" value="1">
+                                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-1" title="1 out of 5 stars"></label>
+                                </div>
+                            </div>
+                            <input type='none' name="product" value='<%=prod.id%>' style="display: none">
+                            <input type="text" class="reviewcontent" cols='44' placeholder="write your review here" name='content' required>
+                            <button type="submit" class="submitbttn"><i class='fas fa-pen'></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include partials/footer.ejs %>
+    </body>
+</html>

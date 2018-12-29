@@ -1,0 +1,173 @@
+
+.manage{
+    width: 80%;
+    height: 200px;
+    margin: auto;
+    margin-bottom: 50px;
+    margin-top: 20px;
+}
+
+
+.add, .delete, .edit{
+    text-align: center;
+    display: table;
+    float: left;
+    width: 28%;
+    margin: 20px;
+    font-size: 100px;
+    height: 100%;
+}
+
+.add i, .delete i, .edit i{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.add{
+    background-color: green;
+}
+
+.edit{
+    background-color: orange;
+}
+
+.delete{
+    background-color: tomato;
+}
+
+.manage div:hover{
+    cursor: pointer;
+    background-color: lightgray;
+}
+
+.manageproduct{
+    display: none;
+    width: 80%;
+    overflow: auto;
+    margin: auto;
+    margin-bottom: 50px;
+    margin-top: 20px;
+}
+
+.manageproduct div{
+    overflow: auto;
+    display: none;
+    height: 500px;
+    width: 100%;
+    height: 100%;
+    /* background-color: red; */
+}
+
+.addproduct .image{
+    display: block;
+    width: 40%;
+    margin: auto;
+    /* background-color: yellow; */
+    text-align: center;
+}
+
+#img{
+    display: block;
+    height: 50vh;
+    width: 40%;
+    margin: auto;
+    border: 1px solid black;
+    /* background-color: yellow; */
+}
+
+.addproduct  .select_category{
+    text-align: center;
+    padding: 10px;
+    display: block;
+    overflow: auto;
+    width: 80%;
+    height: 10%;
+    margin: auto;
+}
+
+.manageproduct a{
+    text-decoration: none;
+    font-size: 20px;
+    color: blue;
+}
+
+.addproduct .product_info{
+    overflow: auto;
+    display: block;
+    width: 80%;
+    margin: auto;
+    /* background-color: brown; */
+}
+
+.addproduct .product_info{
+    font-size: 18px;
+}
+
+.addproduct .product_info table{
+    margin: auto;
+}
+
+.addproduct .product_info input{
+    width: 100%;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.addproduct .product_info textarea{
+    width: 100%;
+    font-size: 20px;
+    padding: 10px;
+    padding-right: 12px;
+}
+
+.addproduct form{
+    overflow: auto;
+    border: 1px solid black;
+    /* background-color: blue; */
+}
+
+.addproduct form button{
+    display: block;
+    color: white;
+    font-size: 20px;
+    background-color: green;
+    border: none;
+    outline: none;
+    width: 25%;
+    height: 50px;
+    margin: auto;
+    margin-bottom: 5px;
+}
+
+.addproduct form button:hover{
+    color: white;
+    cursor: pointer;
+    background-color: black;
+}
+
+.select_category{
+    font-size: 18px;
+    margin: 5px;
+}
+
+.select_category select{
+    padding: 5px;
+    font-size: 18px;
+    outline: none;
+}
+
+.requests{
+    border-top: 1px solid red;
+}
+
+.requests table td, th{
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.requests table{
+    font-size: 20px;
+    margin: auto;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}

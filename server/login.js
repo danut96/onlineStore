@@ -1,6 +1,15 @@
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt');
-var Users = require('./db').User;
+var {
+    User,
+    Categories,
+    Subcategories,
+    Products,
+    Reviews,
+    Orders,
+    Address,
+    Role
+} = require('./db.js');
 
 module.exports = function(passport){
 
@@ -9,7 +18,7 @@ module.exports = function(passport){
     });
 
     passport.deserializeUser(function(email, done) {
-        Users.findAll({where: {
+        User.findAll({where: {
             email: email
         }}).then(user => done(null, user[0]));
     });
@@ -20,30 +29,42 @@ module.exports = function(passport){
         passwordField : 'password',
         passReqToCallback : true
     }, function(req, email, password, done) {
-        Users.findAll({where: {
-            email: email
-        }}).then(user => {
-            if(user.length > 0){
-                return done(null, false, req.flash('signupMessage', 'You already have an account.'));
-            }else{
-                bcrypt.genSalt(10, function(err, salt) {
-                // create user
-                    bcrypt.hash(password, salt, function(err, hash) {
+        bcrypt.genSalt(10, function(err, salt) {
+            // find or create user
+            bcrypt.hash(password, salt, function(err, hash) {
+                if(req.body.firstName.trim() === "" || req.body.lastName.trim() === "" || email.trim() === "") return done(null, false, req.flash('signupMessage', 'Please enter a valid name and email.'));
+                User.findOrCreate({
+                    where: {
+                        email: email
+                    },
+                    defaults: {
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
+                        phone: req.body.phone,
+                        password: hash
+                    }
+                }).spread((user, created) => {
+                    if(!created){
+                        Role.findOne({where: {userId: user.id}}).then(role => {
+                            if(role.role !== 1) return done(null, false, req.flash('signupMessage', 'You already have an account.'));
+                            else return done(null, false, req.flash('signupMessage', 'You already have an account. You can become a seller by checking the seller option within your account page.'));
+                        });
+                }else{
+                        Address.create({
+                            userId: user.id,
+                            content: req.body.address
+                        });
+                        Role.create({
+                            userId: user.id,
+                            role: 1
+                        });
                         var newUserMysql = new Object();
                         newUserMysql.email = email;
                         newUserMysql.password = hash;
-                        Users.create({
-                            id: req.body.id,
-                            firstName: req.body.firstName,
-                            lastName: req.body.lastName,
-                            email: req.body.email,
-                            password: hash,
-                            phone: req.body.phone,
-                            address: req.body.address
-                        }).then(user => {return done(null, newUserMysql)});
-                    });
+                        return done(null, newUserMysql);
+                    }
                 });
-            }
+            });
         });
     }));
 
@@ -56,7 +77,7 @@ module.exports = function(passport){
     },
     function(req, email, password, done) {
             // find user
-            Users.findAll({where: {
+            User.findAll({where: {
                 email: email
             }}).then(user => {
                 if(user.length === 0){
@@ -76,7 +97,7 @@ module.exports = function(passport){
                         }
                     });
                 }
-        });
+            });
     }));
 }
 

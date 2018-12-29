@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html>
-    <head></head>
+    <head>
+        <link rel = "stylesheet" type = "text/css" href = "header&footer.css">
+        <link rel = "stylesheet" type = "text/css" href = "body.css">
+        <link rel = "stylesheet" type = "text/css" href = "login.css">
+    </head>
     <body>
-        <form action='/login' method="POST">
-            <b>Email:</b><br>
-		    <input type="text" name="email" placeholder="email" required><br>
-	        <b>Password:</b><br>
-		    <input type="password" name="password" placeholder="password" required><br>
-		    <p id="error" style="color: red;"><%= message %></p>
-	        <input class="but" type="submit" value="Login"><br>
-        </form>
+        <%- include partials/header.ejs %>
+        <p id="error" style="color: red; text-align: center;"><%= message %></p>
+        <div class="content-container">
+            <form action='/login' method="POST" class="login">
+                <b>Email:</b><br>
+                <input type="text" name="email" placeholder="email" required><br>
+                <b>Password:</b><br>
+                <input type="password" name="password" placeholder="password" required><br><br>
+                <input class="but" type="submit" value="Login"><br>
+            </form>
+        </div>
+        <%- include partials/footer.ejs %>
     </body>
 </html>

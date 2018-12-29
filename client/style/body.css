@@ -1,0 +1,30 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: white;
+    margin: 0px;
+    overflow: auto;
+}
+
+.dotg{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: green;
+}
+
+.dotr{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: red;
+}
+
+.doto{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: orange;
+}

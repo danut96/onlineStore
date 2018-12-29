@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+        <link rel = "stylesheet" type = "text/css" href = "header&footer.css">
+        <link rel = "stylesheet" type = "text/css" href = "body.css">
+        <link rel = "stylesheet" type = "text/css" href = "products.css">
+        <script src="products.js"></script>
+    </head>
+    <body>
+        <%- include partials/header.ejs %>
+        <%if(prod.length > 0){
+        // needed for filter (filter by price, seller);
+        var minPrice;
+        var maxPrice;
+        var inStock = false;
+        var outStock = false;
+        var lastStock = false;
+        var sellers = [];
+        var prod2 = prod.slice().sort((p1, p2) => p1.price - p2.price);
+        minPrice = prod2[0].price;
+        maxPrice = prod2[prod2.length - 1].price + 1;
+        prod.forEach(product => {
+            if(sellers.indexOf(product.user.firstName) === -1 ) sellers.push(product.user.firstName);
+            if(product.stock > 14) inStock = true;
+            if(product.stock === 0) outStock = true;
+            if(product.stock > 0 && product.stock < 15) lastStock = true;
+        });}%>
+        <div class="content-container">
+            <% if(prod.length > 0) {%>
+            <div class="filter">
+                <div class="fprice">
+                    <h3 style="color: #C25B56; text-align: left; padding-left: 10px;">Price</h3>
+                    <div class="rangeslider">
+                        <span class="number">from
+                            <input type="number" onchange="filter(this)" name="&min=" value="<%=minPrice.toFixed(0)%>" min="<%=minPrice.toFixed(0)%>" max="<%=maxPrice.toFixed(0)%>"/>	to
+                            <input type="number" onchange="filter(this)" name="&max=" value="<%=maxPrice.toFixed(0)%>" min="<%=minPrice.toFixed(0)%>" max="<%=maxPrice.toFixed(0)%>"/>
+                        </span>
+                        <span class="range">
+                            <input name="&min=" onchange="filter(this)" value="<%=minPrice.toFixed(0)%>" min="<%=minPrice.toFixed(0)%>" max="<%=maxPrice.toFixed(0)%>" step="1" type="range"/>
+                            <input name="&max=" onchange="filter(this)" value="<%=maxPrice.toFixed(0)%>" min="<%=minPrice.toFixed(0)%>" max="<%=maxPrice.toFixed(0)%>" step="1" type="range"/>
+                        </span>
+                        </div>
+                    </div>
+                <hr>
+                <div class="fstock">
+                    <h3 style="color: #C25B56; text-align: left; padding-left: 10px;">Product availability</h3>
+                    <%if(inStock){%>
+                    <input type="checkbox" onchange="filt()" class="cb" name="&stock=in" value="">In stock<br>
+                    <%}if(outStock){%>
+                    <input type="checkbox" onchange="filt()" class="cb" name="&stock=out" value="">Out of stock<br>
+                    <%}if(lastStock){%>
+                    <input type="checkbox" onchange="filt()" class="cb" name="&stock=last" value="">Last products in stock<br>
+                    <%}%>
+                </div>
+                <hr>
+                <div class="seller">
+                    <h3 style="color: #C25B56; text-align: left; padding-left: 10px;">Sold by</h3>
+                    <%for(let i = 0; i < sellers.length; i++){%>
+                        <input type="checkbox" onchange="filt()" class="cb" name="&seller=<%=sellers[i]%>" value=""><%=sellers[i]%><br>
+                    <%}%>
+                </div>
+                <hr>
+                <a href="" id="filter"><h3>Apply filter</h3></a>
+            </div>
+            <div class="products">
+                <div id="order">
+                    <div id="image-order">Order by: </div>
+                    <div id="rating-order">Rating &nbsp; 
+                        <a href = "" name="rating=ASC" onclick="orderBy(this)"><i class="fa fa-angle-down" style="color: red; font-size: 35px"></i></a>
+                        <a href = "" name="rating=DESC"  onclick="orderBy(this)"><i class="fa fa-angle-up" style="color: green;font-size: 35px"></i></a>
+                    </div>
+                    <div id="price-order">Price  &nbsp; 
+                        <a href=''name="price=ASC" onclick="orderBy(this)"><i class="fa fa-angle-down" style="color: green;font-size: 35px"></i></a>
+                        <a href=''name="price=DESC" onclick="orderBy(this)"><i class="fa fa-angle-up" style="color: red; font-size: 35px"></i></a>
+                    </div>
+                    <div id="price-order">Discount  &nbsp; 
+                        <a href=''name="discount=ASC"  onclick="orderBy(this)"><i class="fa fa-angle-down" style="color: red;font-size: 35px"></i></a>
+                        <a href=''name="discount=DESC"  onclick="orderBy(this)"><i class="fa fa-angle-up" style="color: green; font-size: 35px"></i></a>
+                    </div>
+                </div>
+                <% for(let i = 0; i < prod.length; i++) {%>
+                <div class="product">
+                    <a href="/product?id=<%=prod[i].id%>">
+                        <div class="image">
+                            <img src="http://localhost:3000/images/<%=prod[i].image%>">
+                        </div>
+                        <div class="title-rating">
+                            <div class="title"><%= prod[i].name %></div>
+                            <div class="stock">
+                                <%if(prod[i].stock > 14){%> 
+                                    <span style="color:green"> <span class="dotg"></span> In stock.</span>
+                                    <%}else{ if(prod[i].stock > 0){%>
+                                    <span style="color:orange"> <span class="doto"></span> Last items in stock!</span>
+                                    <%}else{%>
+                                    <span style="color:red"> <span class="dotr"></span> Out of stock.</span>
+                                    <%}}%>
+                            </div>
+                            <div class="rating">
+                                <% for(let j = 0; j < Math.round(prod[i].rating); j++) { %>
+                                    <span class="fa fa-star checked"></span>
+                                    <%}%>
+                                <% for(let j = Math.round(prod[i].rating); j < 5 ; j++) { %>
+                                    <span class="fa fa-star"></span>
+                                    <%}%>
+                                <%= prod[i].rating.toFixed(1) %>
+                            </div>
+                        </div>
+                        <div class="price">
+                            <div style="line-height: normal">
+                                <% if(prod[i].discount > 0) {%> 
+                                <del style="color: red">$ <%= prod[i].price%> </del><br>
+                                <span style="color: green"><%= "$" + (prod[i].price - prod[i].discount * prod[i].price / 100) %></span>
+                                <%} else { %>
+                                <span style="color: green"><%=  "$" + prod[i].price%></span>
+                                <%}%>
+                            </div>
+                        </div>
+                    </a>
+                    <%if((!isSeller || prod[i].userId !== user_id) && !isAdmin){%>
+                    <%if(prod[i].stock > 0){%>
+                    <a href="/basket/add?id=<%=prod[i].id%>">
+                        <div class="add-basket">
+                            <button><i class="fa fa-cart-plus"></i></button>
+                        </div>
+                    </a>
+                    <%}else{%>
+                    <a href="/basket/add?id=<%=prod[i].id%>" style="pointer-events: none;">
+                        <div class="add-basket">
+                            <button disabled><i class="fa fa-cart-plus"></i></button>
+                        </div>
+                    </a>
+                    <%}%>
+                    <%}if((isSeller && prod[i].userId === user_id) || isAdmin){%>
+                        <%if(prod[i].stock > 0){%>
+                            <a href="/basket/add?id=<%=prod[i].id%>">
+                                <div class="add-basket" style="width: 7.5%;">
+                                    <button><i class="fa fa-cart-plus"></i></button>
+                                </div>
+                            </a>
+                            <%}else{%>
+                            <a href="/basket/add?id=<%=prod[i].id%>" style="pointer-events: none; height: 50%">
+                                <div class="add-basket" style="width: 7.5%;">
+                                    <button disabled><i class="fa fa-cart-plus"></i></button>
+                                </div>
+                            </a>
+                            <%}%>
+                            <div class="for-seller"style="width: 7.5%; height: 100% ; background-color: red; float: right">
+                                <div class="edit" onclick="location.href='/product?id=<%=prod[i].id%>'"> <i class='fas fa-cog' style="display: table-cell; vertical-align: middle"></i></div>
+                                <div class="delete" onclick="location.href='/delete?id=<%=prod[i].id%>'"> <i class='fas fa-cut' style="display: table-cell; vertical-align: middle"></i></div>
+                            </div>
+                        
+                    <%}%>
+                    </div>
+                
+                <% } %>
+                <%}else{%>
+                    <div style="font-size: 30px; text-align: center;">Sorry, no products found.</div>
+                <%}%>
+            </div>
+        </div>
+        <%- include partials/footer.ejs %>
+    </body>
+</html>

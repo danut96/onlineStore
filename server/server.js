@@ -6,6 +6,7 @@ const session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 var flash = require('connect-flash');
 
+
 const app = express();
 
 app.set('views',  'client/views');
@@ -18,7 +19,7 @@ app.set('view engine', 'ejs');
 
 
 app.listen(process.env.PORT || 3000, () => {
-    console.log('server is running')
+    console.log('server is running');
 });
 
 require('./login')(passport);
@@ -36,15 +37,18 @@ var options = {
 var sessionStore = new MySQLStore(options);
 
 app.use(session({
-	secret: 'asjfheirbframlcamij4fpoewmfyuw948295rm',
-	resave: false,
-	store: sessionStore,
-	saveUninitialized: false,
-	//cookie: { secure: true }
-  }));
+    secret: 'asjfheirbframlcamij4fpoewmfyuw948295rm',
+    resave: false,
+    store: sessionStore,
+    saveUninitialized: false,
+    //cookie: { secure: true }
+    }));
 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-
+app.use(function (req, res, next) {
+    res.locals.login = req.isAuthenticated();
+    next();
+});
 require('./api.js')(app, passport);
