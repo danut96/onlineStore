@@ -31,7 +31,12 @@ module.exports = function(app, passport){
 
     function role(){
         return (req, res, next) => {
-            Role.findOne({where:{userId: req.user.id}}).then(role => {
+            if(req.isAuthenticated() === false){
+                isSeller = false;
+                isAdmin = false;
+                next();
+            }else{   
+                Role.findOne({where:{userId: req.user.id}}).then(role => {
                 isSeller = false;
                 isAdmin = false;
                 if(role.role === 2){
@@ -41,6 +46,7 @@ module.exports = function(app, passport){
                     isAdmin = true;
                 }
             }).then(() => next());
+            }
         }
     }
 
@@ -342,7 +348,7 @@ module.exports = function(app, passport){
     });
 
     // get product page
-    app.get('/product', role(),(req, res, next) => {
+    app.get('/product', role(), (req, res, next) => {
         Product.findOne({include: [{model: User, as: 'user'}], where:{id: req.query.id}}).then(product => {
             Review.findAndCountAll({order: [['createdAt', 'DESC']], include: [{model: User, as: "user"}], where: {productId: product.id}}).
             then(reviews => {

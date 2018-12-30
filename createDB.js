@@ -18,7 +18,7 @@ function createDB(){
         });
     });
 
-    cmd.run(`mysql -u root -ppassword mama < schema.sql`);
+    cmd.run(`mysql -u root -ppassword online_store < schema.sql`);
 }
 
 createDB();
