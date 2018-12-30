@@ -18,3 +18,5 @@
        npm run admin
     
 7. Start using the site. Enjoy!
+
+*** onlineStore uses "root" and "password" as default username and password for your sql server ***
