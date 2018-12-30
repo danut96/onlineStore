@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 
-const sequelize = new Sequelize('online_store', 'root', 'password', {
+const sequelize = new Sequelize('online_store', "root", "password", {
     host: 'localhost',
     dialect: 'mysql',
     operatorsAliases: false,

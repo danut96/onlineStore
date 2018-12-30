@@ -29,8 +29,8 @@ app.use(cookieParser());
 var options = {
     host: 'localhost',
     port: 3306,
-    user: 'root',
-    password: 'password',
+    user: "root",
+    password: "password",
     database: 'online_store'
 };
 
