@@ -1,0 +1,328 @@
+.content-container{
+    /* height: 500px; */
+    overflow: auto;
+    height:1%;
+}
+
+
+.orders{
+    /* overflow: auto; */
+    width: 49%;
+    float: left;
+}
+
+.profile{
+    overflow: auto;
+    width: 50%;
+    float: right;
+}
+
+.content-container h4{
+    border-bottom: 1px solid #C25B56;
+}
+
+.order{
+    border: 1px solid black;
+    text-align: center;
+    width: 100%;
+    height: 70px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /* background-color: yellow; */
+}
+
+.date{
+    line-height: 70px;
+    float: left;
+    width: 15%;
+    height: 100%;
+    background-color: lightgray;
+}
+
+.name{
+    display: table;
+    float:left;
+    width: 30%;
+    height: 100%;
+    background-color: white;
+}
+
+.quantity{
+    line-height: 70px;
+    float:left;
+    width: 5%;
+    height: 100%;
+    background-color:lightgray;
+}
+
+
+.price{
+    line-height: 70px;
+    float: left;
+    width: 10%;
+    height: 100%;
+    background-color:white;
+}
+
+.discount{
+    line-height: 70px;
+    float: left;
+    width: 7%;
+    height: 100%;
+    background-color:lightgray;
+}
+
+.total-paid{
+    line-height: 70px;
+    float: left;
+    width: 10%;
+    height: 100%;
+    background-color:white;
+}
+
+.address{
+    display: table;
+    float: left;
+    width: 23%;
+    height: 100%;
+    background-color:lightgray;
+}
+
+.personal-info{
+    padding: 10px;
+    border: 1px solid black;
+    overflow: auto;
+    width: 80%;
+    margin: auto;
+    margin-bottom: 50px;
+}
+
+.personal-info form input{
+    font-size: 18px;
+    padding: 15px;
+}
+
+.personal-info form button{
+    cursor: pointer;
+    border: 1px solid black;
+    font-size: 18px;
+    padding: 15px;
+}
+
+.personal-info form button:hover{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+label{
+    width: 100%;
+    height: 100%;
+}
+
+table td label{
+   float:right;
+   text-align: right;
+}
+
+input[type='checkbox'] {
+    -webkit-appearance:none;
+    width:25px;
+    height:25px;
+    background:white;
+    border:1px solid gray;
+    outline: none;
+    background-color: red;
+}
+
+input[type='checkbox']:checked {
+    background: green;
+}
+
+input[type='checkbox']:hover{
+    cursor: pointer;
+}
+
+#menu-admin{
+    height: 50px;
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+#menu-admin button{
+    outline: none;
+    border: none;
+    color:white;
+    float: left;
+    width: 32%;
+    background-color: gray;
+    padding: 5px;
+    margin: 3px;
+    font-size: 20px;
+}
+
+#menu-admin button:hover{
+    background-color: lightgray;
+    color:black;
+    cursor: pointer;
+}
+
+#users, #requests{
+    display: none;
+}
+
+#users{
+    width: 100%;
+    background-color:white;
+    overflow: auto;
+}
+
+#requests{
+    width: 100%;
+    height: 500px;
+}
+
+.role{
+    text-align: left;
+    position: relative;
+}
+
+
+#users table{
+    font-size: 20px;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+#users table td, table th{
+    padding: 5px;
+    border: 1px solid black;
+}
+
+#users form button{
+    border: none;
+    width: 20%;
+    margin-left: 40%;
+    margin-right: 40%;
+    background-color: #C25B56;
+    color: black;
+    font-size: 25px;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#users form button:hover{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+.req{
+    margin: 5px;
+    position: relative;
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+    overflow: auto;
+    background-color: lightgray;
+}
+
+.req_date{
+    float: left;
+    width: 15%;
+    height: 100%;
+}
+
+.req a{
+    text-decoration: none;
+    color: blue;
+}
+
+.req_seller{
+    height: 100%;
+    float: left;
+    width: 15%;
+}
+
+.req_type{
+    height: 100%;
+    float: left;
+    width: 10%;
+}
+
+.req_description{
+    overflow: hidden;
+    float: left;
+    width: 40%;
+    height: 100%;
+}
+
+.req_yes{
+    position: absolute;
+    height: 100%;
+    right: 10%;
+    width: 10%;
+}
+
+.req_yes button{
+    color: green;
+}
+
+.req_no{
+    height: 100%;
+    position: absolute;
+    right: 0px;
+    width: 10%;
+}
+
+.req_no button{
+    color: red;
+}
+
+.req button{
+    background-color: lightgray;
+    font-size: 20px;
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+}
+
+.req button:hover{
+    color: black;
+    cursor: pointer;
+}
+
+#category{
+    text-align: center;
+    width: 60%;
+    margin: auto;
+}
+
+#category form{
+    margin: 15px;
+}
+
+#category form input, button, select{
+    padding: 5px;
+    font-size: 20px;
+}
+
+#category form button{
+    border: none;
+    outline: none;
+    background-color: #C25B56;
+    color: white;
+    padding: 7px;
+}
+
+#category form button:hover{
+    cursor: pointer;
+    background-color: black;
+}
+
+#category form select{
+    outline: none;
+}

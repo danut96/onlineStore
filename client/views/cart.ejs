@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel = "stylesheet" type = "text/css" href = "header&footer.css">
+        <link rel = "stylesheet" type = "text/css" href = "body.css">
+        <link rel = "stylesheet" type = "text/css" href = "cart.css">
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+    </head>
+    <body>
+        <%- include partials/header.ejs %>
+        <div class="content-container">
+            <h2>Hello, <%= user.firstName %><br></h2>
+            <% if(products.length > 0){ %>
+            <p>You have the following products in your basket:<br></p>
+            <div style="width:80%; margin: 5px; margin:auto; height: 25px;  border: 1px solid #C25B56; font-size: 20px; line-height: 25px; text-align: center; background-color: lightgray">
+                <div style="width: 15%; float:left; height: 100%;"></div>
+                <div style="width: 55%; float:left;height: 100%">Product name</div>
+                <div style="width: 10%; float:left;height: 100%">Quantity</div>
+                <div style="width: 10%; float:left;height: 100%">Price</div>
+            </div>
+            <% for(let i = 0; i < products.length; i++){%>
+                <div class="product-in-basket">
+                    <div class="image">
+                            <img src="http://localhost:3000/images/<%=products[i].product.image%>">
+                    </div>
+                    <div class="name"><a href="/product?id=<%=products[i].product.id%>"> <%=products[i].product.name%> </a></div>
+                    <div class="quantity">
+                        <div class="minus"><a href="/basket/minus?id=<%=products[i].productId%>">-</a></div>
+                        <div style="font-size: 20px;"><span style="display: table-cell; vertical-align: middle;"><%=products[i].quantity%></span></div>
+                        <div class="plus"><a href="/basket/add?id=<%=products[i].productId%>">+</a></div>
+                    </div>
+                    <div class="price"><span><%=products[i].product.price * products[i].quantity%>$</span></div>
+                    <div class="delete"><a href="/basket/delete?id=<%=products[i].productId%>">delete product</a></div>
+                </div>
+            <%}%>
+            <% let sum = 0, discount = 0; for(let i = 0; i < products.length; i++){sum += products[i].product.price * products[i].quantity; discount += products[i].product.price * products[i].quantity * products[i].product.discount/100}%>
+            <div style="width:80%; margin: 5px; margin:auto; height: 75px;  border: 1px solid #C25B56; font-size: 20px; line-height: 25px; text-align: center; background-color: lightgray">
+                    <div style="width: 15%; float:left; height: 100%;"></div>
+                    <div style="width: 55%; float:left;height: 100%"></div>
+                    <div style="width: 10%; float:left;height: 100%; text-align: right">Subtotal:<br>Discount:<br>Total:</div>
+                    <div style="width: 10%; float:left;height: 100%"><%= sum.toFixed(2)%>$<br>-<%= discount.toFixed(2)%>$<br><%=(sum - discount).toFixed(2)%>$</div>
+            </div><br><br>
+            <form  id="place-order"  action="/place-order" method="POST">
+                <table>
+                    <tr>
+                        <td>
+                            *Shipping address:
+                        </td>
+                        <td>
+                            <select name="address">
+                            <%for(let j = 0; j < addresses.length; j++){%>
+                                <option value="<%=addresses[j].id%>"><%=addresses[j].content%></option>
+                            <%}%>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center;">
+                            <button type="submit">Place order <i class='fas fa-cart-arrow-down'></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center; font-size: 15px;">
+                            *You can manage your addresses from <a href="/myaccount" style="color: blue;">your account</a>
+                        <td>
+                    </tr>
+                </table>
+            </form>
+            <%}else{%>
+                <p>Your basket is empty.</p>
+            <%}%>
+
+            
+        </div>
+        <%- include partials/footer.ejs %>
+    </body>
+</html>

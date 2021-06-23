@@ -1,0 +1,38 @@
+.content-container{
+    margin-top: 50px;
+    margin-left: 40%;
+    margin-bottom: 50px;
+}
+
+/* login/signup form */
+.login{
+    margin: 0px;
+    padding: 0px;
+    font-size: 20px;
+}
+
+.login input{
+    margin-top: 3px; 
+    margin-bottom: 3px; 
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 250px;
+    font-size: 20px;
+}
+
+.but{
+    margin-top: 5px;
+    /* border: px solid #C25B56; */
+    font-size: 20px;
+    background-color: #C25B56;
+    border-style: none;
+}
+
+.but:hover{
+    cursor: pointer;
+    background-color:#BEB9B5;
+}
+
+.but, .login input{
+    box-sizing: border-box;
+}

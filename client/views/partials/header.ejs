@@ -1,0 +1,26 @@
+<header>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="header.js"></script>
+    <div class="menu-container">
+        <button><i class="fa fa-bars"></i></button>
+        <ul class="categories"></ul>
+    </div>
+    <div class="search_container">
+        <form action='/search' method="GET">
+            <input type="text" id="searched" placeholder="Search..." name="product">
+            <input type='' name="discount" value="DESC" style="display:none">
+            <button type="submit" ><i class="fa fa-search"></i></button>
+        </form>
+    </div>
+    <div id="logo"><a href="/">onlinestore.</a></div>
+    <div id="floatRight">
+        <%if(login){%>
+        <button onclick="location.href='/logout'">Log out</button>
+        <button onclick="location.href='/myaccount'">My account</button>
+        <%}else{%>
+        <button onclick="location.href='/signup'">Sign up</button>
+        <button onclick="location.href='/login'">Log in</button>
+        <%}%>
+        <button onclick="location.href='/basket'"><i class="fa fa-shopping-cart"></i></a>
+    </div>
+</header>

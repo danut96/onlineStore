@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel = "stylesheet" type = "text/css" href = "header&footer.css">
+        <link rel = "stylesheet" type = "text/css" href = "body.css">
+        <link rel = "stylesheet" type = "text/css" href = "index.css">
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+        <script src="index.js"></script>
+    </head>
+    <body>
+        <%- include partials/header.ejs %>
+        <div class="content-container">
+            <div class="promotion"><b style="color: red; font-size: 50px;"> - %   </b>Biggest discounts </div>
+            <div class="content">
+                <button class="left_scroll" onclick="left(0)"><i class='fas fa-chevron-left'></i></button>
+                <button class="right_scroll" onclick="right(0)"><i class='fas fa-chevron-right'></i></button>
+                <div class="slider">
+                <% for(let i = 0; i < prod.length; i++){ %>
+                    <div class="product">
+                        <a href="/product?id=<%=prod[i].id%>">
+                            <%if(prod[i].discount > 0){%>
+                                <div class="discount">-<%=prod[i].discount%>%</div>
+                            <%}%>
+                            <div class="image">
+                                <img src="http://localhost:3000/images/<%=prod[i].image%>">
+                            </div>
+                            <div class="title"><%=prod[i].name%></div>
+                            <div class="stock">
+                                <%if(prod[i].stock > 14){%> 
+                                    <span style="color:green"> <span class="dotg"></span> In stock.</span>
+                                    <%}else{ if(prod[i].stock > 0){%>
+                                    <span style="color:orange"> <span class="doto"></span> Last items in stock!</span>
+                                    <%}else{%>
+                                    <span style="color:red"> <span class="dotr"></span> Out of stock.</span>
+                                    <%}}%>
+                                </div>
+                            <div class="rating">
+                                <% for(let j = 0; j < Math.round(prod[i].rating); j++) { %>
+                                    <span class="fa fa-star checked"></span>
+                                <%}%>
+                                <% for(let j = Math.round(prod[i].rating); j < 5 ; j++) { %>
+                                    <span class="fa fa-star"></span>
+                                <%}%>
+                            <%= prod[i].rating.toFixed(1) %>
+                        </div>
+                            <div class="price">
+                                    <% if(prod[i].discount > 0) {%> 
+                                        <del style="color: red">$ <%= prod[i].price%> </del>
+                                        <span style="color: green"><%= "$" + (prod[i].price - prod[i].discount * prod[i].price / 100) %></span>
+                                        <%} else { %>
+                                        <span style="color: green"><%=  "$" + prod[i].price%></span>
+                                        <%}%>
+                            </div>
+                        </a>
+                        <a href="/basket/add?id=<%=prod[i].id%>">
+                            <div class="addtocart">ADD TO CART</div>
+                        </a>
+                    </div>
+                <%}%>
+                </div>
+                
+            </div>
+            <div class="promotion"> <i class='fas fa-bell' style="color: red; font-size: 50px;"> &nbsp;   </i>Only a few left in stock. Hurry up!</div>
+            <div class="content">
+                <button class="left_scroll" onclick="left(1)"><i class='fas fa-chevron-left'></i></button>
+                <button class="right_scroll" onclick="right(1)"><i class='fas fa-chevron-right'></i></button>
+                <div class="slider">
+                <% for(let i = 0; i < prodLeft.length; i++){ %>
+                    <div class="product">
+                        <a href="/product?id=<%=prodLeft[i].id%>">
+                            <%if(prodLeft[i].discount > 0){%>
+                                <div class="discount">-<%=prodLeft[i].discount%>%</div>
+                            <%}%>
+                            <div class="image">
+                                <img src="http://localhost:3000/images/<%=prodLeft[i].image%>">
+                            </div>
+                            <div class="title"><%=prodLeft[i].name%></div>
+                            <div class="stock">
+                                <%if(prodLeft[i].stock > 14){%> 
+                                    <span style="color:green"> <span class="dotg"></span> In stock.</span>
+                                    <%}else{ if(prodLeft[i].stock > 0){%>
+                                    <span style="color:orange"> <span class="doto"></span> Last items in stock!</span>
+                                    <%}else{%>
+                                    <span style="color:red"> <span class="dotr"></span> Out of stock.</span>
+                                    <%}}%>
+                                </div>
+                            <div class="rating">
+                                <% for(let j = 0; j < Math.round(prodLeft[i].rating); j++) { %>
+                                    <span class="fa fa-star checked"></span>
+                                <%}%>
+                                <% for(let j = Math.round(prodLeft[i].rating); j < 5 ; j++) { %>
+                                    <span class="fa fa-star"></span>
+                                <%}%>
+                            <%= prodLeft[i].rating.toFixed(1) %>
+                        </div>
+                            <div class="price">
+                                    <% if(prodLeft[i].discount > 0) {%> 
+                                        <del style="color: red">$ <%= prodLeft[i].price%> </del>
+                                        <span style="color: green"><%= "$" + (prodLeft[i].price - prodLeft[i].discount * prodLeft[i].price / 100) %></span>
+                                        <%} else { %>
+                                        <span style="color: green"><%=  "$" + prodLeft[i].price%></span>
+                                        <%}%>
+                            </div>
+                        </a>
+                        <a href="/basket/add?id=<%=prodLeft[i].id%>">
+                            <div class="addtocart">ADD TO CART</div>
+                        </a>
+                        </div>
+                    
+                    <%}%>
+                    
+                </div>
+            </div>
+        </div>
+        <%- include partials/footer.ejs %>
+    </body>
+</html>

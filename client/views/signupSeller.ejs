@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel = "stylesheet" type = "text/css" href = "header&footer.css">
+        <link rel = "stylesheet" type = "text/css" href = "body.css">
+        <link rel = "stylesheet" type = "text/css" href = "login.css">
+    </head>
+    <body>
+        <%- include partials/header.ejs %>
+        <p id="error" style="color: red; text-align: center;"><%= message %></p>
+        <div class="content-container">
+            <form action='/signup-seller' method="POST" class="login">
+                <b>*Name:</b><br>
+                <input type="text" name="firstName" placeholder="Name" required><br>
+                <input type="text" name="lastName" value="NaN" style="display: none">
+                <b>*Email:</b><br>
+                <input type="text" name="email" placeholder="email" required><br>
+                <b>*Password:</b><br>
+                <input type="password" name="password" placeholder="Password" required><br>
+                <input type="text" name="phone" value="NaN" style="display: none"><br>
+                <input type="text" name="address" value="NaN" style="display: none"><br>
+                <input class="but" type="submit" value="Signup"><br>
+            </form>
+        </div>
+        <%- include partials/footer.ejs %>
+    </body>
+</html>
